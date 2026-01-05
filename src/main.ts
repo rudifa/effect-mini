@@ -1,6 +1,6 @@
 import {Effect, Console} from "effect";
-import {Clock, Logger, LiveClock, LiveLogger} from "./services";
-import {TooEarly, TooLate, AppError} from "./errors";
+import {Clock, Logger, LiveClock, LiveLogger} from "./services.js";
+import {TooEarly, TooLate, AppError} from "./errors.js";
 
 const program = Effect.gen(function* () {
   const clock = yield* Clock;
