@@ -1,6 +1,7 @@
 import {Effect} from "effect";
-import {Clock, Logger, LiveClock, LiveLogger} from "./services.js";
-import {TooEarly, TooLate, AppError} from "./errors.js";
+import {Effect, Console} from "effect";
+import {Clock, Logger, LiveClock, LiveLogger} from "./services";
+import {TooEarly, TooLate, AppError} from "./errors";
 
 const program = Effect.gen(function* () {
   const clock = yield* Clock;
@@ -27,6 +28,11 @@ const program = Effect.gen(function* () {
 const runnable = program.pipe(
   Effect.provideService(Clock, LiveClock),
   Effect.provideService(Logger, LiveLogger)
+  // Handle known errors within the Effect system
+  ,Effect.catchTags({
+    TooEarly: () => Console.error("Come back later"),
+    TooLate: () => Console.error("Try tomorrow")
+  })
 );
 
 Effect.runPromise(runnable)
@@ -43,3 +49,4 @@ Effect.runPromise(runnable)
         break;
     }
   });
+  .then((result) => console.log("Result:", result));

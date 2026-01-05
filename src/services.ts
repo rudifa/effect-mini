@@ -3,14 +3,14 @@ import {Context, Effect} from "effect";
 export class Clock extends Context.Tag("Clock")<
   Clock,
   {
-    now: Effect.Effect<never, never, number>;
+    now: Effect.Effect<number>;
   }
 >() {}
 
 export class Logger extends Context.Tag("Logger")<
   Logger,
   {
-    log: (msg: string) => Effect.Effect<never, never, void>;
+    log: (msg: string) => Effect.Effect<void>;
   }
 >() {}
 
